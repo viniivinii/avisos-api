@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Painel</title>
+</head>
+<body style="font-family:sans-serif;padding:2rem;">
+  <h2>Painel de Avisos</h2>
+  <button onclick="limpar()">Limpar Todos os Avisos</button>
+  <p id="status"></p>
+  <script>
+    async function limpar() {
+      const res = await fetch("https://10.10.2.94:3000/api/avisos", { method: 'DELETE' });
+      document.getElementById('status').textContent =
+        res.ok ? "Avisos apagados!" : "Erro ao apagar avisos.";
+    }
+  </script>
+</body>
+</html>

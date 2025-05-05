@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Flow - Avisos</title>
+  <style>
+    body { background: #111; color: #fff; font-family: sans-serif; text-align: center; }
+    .aviso { margin: 2rem auto; padding: 1.5rem; background: #222; border-radius: 10px; width: 80%; max-width: 600px; }
+    .autor { font-weight: bold; }
+    .mensagem { font-size: 1.5rem; margin-top: 0.5rem; }
+    #timer { position: absolute; top: 10px; right: 20px; color: #ccc; }
+  </style>
+</head>
+<body>
+  <div id="timer">00:00</div>
+  <h1>Flow - Avisos</h1>
+  <div id="aviso-container">Carregando...</div>
+  <script>
+    const container = document.getElementById("aviso-container");
+    const timerEl = document.getElementById("timer");
+    let avisos = [], indice = 0, tempo = 10;
+
+    function atualizarTimer(t) {
+      timerEl.textContent = `Próximo em: ${t}s`;
+    }
+
+    async function carregarAvisos() {
+      try {
+        const res = await fetch("https://10.10.2.94:3000/api/avisos");
+        avisos = await res.json();
+
+        console.log("Avisos recebidos:", avisos); // DEBUG
+
+        if (!avisos.length) {
+          container.innerHTML = "<p>Nenhum aviso.</p>";
+          return;
+        }
+        exibirAviso();
+      } catch (erro) {
+        console.error("Erro ao carregar avisos:", erro);
+        container.innerHTML = "<p>Erro ao carregar avisos.</p>";
+      }
+    }
+
+    function exibirAviso() {
+      const aviso = avisos[indice];
+      container.innerHTML = `<div class="aviso">
+        <div class="autor">${aviso.autor || "Sem autor"} - Pedido: ${aviso.pedido || "N/A"}</div>
+        <div class="mensagem">${aviso.mensagem || "Mensagem vazia"}</div>
+      </div>`;
+  let t = tempo;
+  atualizarTimer(t);
+  const int = setInterval(() => {
+    t--;
+    atualizarTimer(t);
+    if (t <= 0) {
+      clearInterval(int);
+      indice = (indice + 1) % avisos.length;
+      exibirAviso();
+    }
+  }, 1000);
+}
+
+
+    carregarAvisos();
+  </script>
+</body>
+</html>
