@@ -1,22 +1,17 @@
 {
   "name": "avisos-api",
   "version": "1.0.0",
+  "description": "API para gerenciamento de avisos vinda do Power Automate",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Vinicius Silva",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "fs-extra": "^11.3.0"
-  },
-  "engines": {
-    "node": "18.x"
   }
 }
-
