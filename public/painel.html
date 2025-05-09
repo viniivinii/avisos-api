@@ -7,12 +7,21 @@
 <body style="font-family:sans-serif;padding:2rem;">
   <h2>Painel de Avisos</h2>
   <button onclick="limpar()">Limpar Todos os Avisos</button>
+  <button onclick="recarregarAvisos()">Recarregar avisos</button>
   <p id="status"></p>
   <script>
     async function limpar() {
-      const res = await fetch("https://10.10.2.94:3000/api/avisos", { method: 'DELETE' });
+      const res = await fetch("https://avisos-api-7oz5.onrender.com/api/avisos", { method: 'DELETE' });
       document.getElementById('status').textContent =
         res.ok ? "Avisos apagados!" : "Erro ao apagar avisos.";
+    }
+
+    function recarregarAvisos() {
+      const janela = window.open('avisos.html', '_blank');
+
+      if (janela) {
+        janela.location.reload();
+      }
     }
   </script>
 </body>
