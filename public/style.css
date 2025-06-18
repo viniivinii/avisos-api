@@ -1,47 +1,59 @@
-body { 
-    background: #111; 
-    color: #fff; 
-    font-family: sans-serif; 
-    text-align: center; 
+body {
+  background: #111;
+  color: #fff;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 0 5px yellow;
   }
-  .aviso { 
-    margin: 5rem auto; 
-    padding: 2rem; 
-    background: #222; 
-    border-radius: 10px; 
-    width: fit-content; 
-    max-width: 90%;
-    display: inline-block;
-    word-break: break-word;
-    white-space: normal;
+  100% {
+    box-shadow: 0 0 0 10px #111;
   }
-  .autor { 
-    font-weight: bold; 
-    font-size: 8rem;
-  }
-  .mensagem { 
-    font-size: 10rem; 
-    margin-top: 0.5rem;
-    word-wrap: break-word;
-    line-height: 1.1;
-  }
-  #timer { 
-    position: absolute; 
-    top: 10px; 
-    right: 20px; 
-    color: #ccc; 
-  }
-  #clock {
-    position: fixed;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 8rem;
-    color: #aaa;
-  }
-  #logo {
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    height: 100px;
-  }
+}
+.aviso {
+  margin: 5rem auto;
+  margin-top: 9rem;
+  padding: 2rem;
+  background: #222;
+  border-radius: 10px;
+  width: fit-content;
+  max-width: 90%;
+  display: inline-block;
+  word-break: break-word;
+  white-space: normal;
+  animation: pulse 2s infinite;
+}
+.autor {
+  font-weight: bold;
+  font-size: 8rem;
+}
+.mensagem {
+  font-size: 10rem;
+  margin-top: 0.5rem;
+  word-wrap: break-word;
+  line-height: 1.1;
+}
+
+#timer {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #ccc;
+}
+#clock {
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13rem;
+  color: #aaa;
+}
+#logo {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  height: 100px;
+}

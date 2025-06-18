@@ -26,6 +26,7 @@ app.post('/api/avisos', (req, res) => {
     autor: req.body.autor,
     pedido: req.body.pedido,
     mensagem: req.body.mensagem,
+    status: req.body.status,
     criadoEm: new Date().toISOString()
   };
 
@@ -39,7 +40,20 @@ app.post('/api/avisos', (req, res) => {
 
 // Rota para o telão buscar os avisos (GET)
 app.get('/api/avisos', (req, res) => {
-  const avisos = JSON.parse(fs.readFileSync(DB_FILE));
+  let avisos = JSON.parse(fs.readFileSync(DB_FILE));
+  const agora = Date.now();
+
+  avisos = avisos.filter(aviso => {
+    const criadoEm = new Date(aviso.criadoEm).getTime();
+    let duracaoHoras = 24;
+
+    if (aviso.status === 'medio') duracaoHoras = 48;
+    if (aviso.status === 'alto') duracaoHoras = 72;
+
+    return (agora - criadoEm) < duracaoHoras * 3600 * 1000;
+  });
+
+  fs.writeFileSync(DB_FILE, JSON.stringify(avisos));
   res.json(avisos.slice(0, 10));
 });
 

@@ -36,22 +36,36 @@ async function carregarAvisos() {
 
 function exibirAviso() {
   const aviso = avisos[indice];
+  const tempoAviso = aviso.status === 'alto' ? 72 :
+  aviso.status === 'medio' ? 48 : 24;
+
+  const criado = new Date(aviso.criadoEm).getTime();
+  const agora = Date.now();
+  const totalMs = tempoAviso * 3600 * 1000;
+  const restanteMs = Math.max(totalMs - (agora - criado), 0);
+  const restantePerc = (restanteMs / totalMs) * 100;
+
+  document.querySelector("circle.tempo").setAttribute("stroke-dashoffset", (100 - restantePerc));
+
+  // exibição do aviso
   container.innerHTML = `<div class="aviso">
     <div class="autor">${aviso.autor || "Sem autor"} - Pedido: ${aviso.pedido || "N/A"}</div>
     <div class="mensagem">${aviso.mensagem || "Mensagem vazia"}</div>
   </div>`;
-let t = tempo;
-atualizarTimer(t);
-const int = setInterval(() => {
-t--;
-atualizarTimer(t);
-if (t <= 0) {
-  clearInterval(int);
-  indice = (indice + 1) % avisos.length;
-  exibirAviso();
+
+  let t = tempo;
+  atualizarTimer(t);
+  const int = setInterval(() => {
+    t--;
+    atualizarTimer(t);
+    if (t <= 0) {
+      clearInterval(int);
+      indice = (indice + 1) % avisos.length;
+      exibirAviso();
+    }
+  }, 1000);
 }
-}, 1000);
-}
+
 
 
 carregarAvisos();
